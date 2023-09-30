@@ -1,24 +1,16 @@
-# ecommerce
+This is ecommerce catalog made using Vue.js 2
+Here's how to run the project in your environment:
 
 ## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+```npm install```
+## Compiles and run for development
+```npm run serve```
 
 ### Compiles and minifies for production
-```
-npm run build
-```
+```npm run build```
 
 ### Lints and fixes files
-```
-npm run lint
-```
+```npm run lint```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+or, you can also see the deployed page at 
+```https://ecommerce-catalog-chi.vercel.app/```
