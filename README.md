@@ -14,3 +14,4 @@ Here's how to run the project in your environment:
 
 or, you can also see the deployed page at 
 ```https://ecommerce-catalog-chi.vercel.app/```
+(Note: If you live in Indonesia, you might want to open the page using VPN. As of 1/10/2023, Vercel is still blocked)
