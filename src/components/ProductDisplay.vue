@@ -18,7 +18,7 @@
                     <div class="product-details">
                         <p>This product is not available.</p>
                         <div class="cta">
-                            <button type="button" @click="getSingleProduct()" class="cta-next-none">Next Product</button>
+                            <button type="button" @click="getProduct()" class="cta-next-none">Next Product</button>
                         </div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                                 <button type="button"
                                     :class="product.data.category === 'men\'s clothing' ? 'cta-buy-men' : 'cta-buy-women'"
                                     class="cta-buy">Buy Now</button>
-                                <button type="button" @click="getSingleProduct()"
+                                <button type="button" @click="getProduct()"
                                     :class="!isProductAvailable ? 'cta-next-none' : product.data.category === 'men\'s clothing' ? 'cta-next-men' : 'cta-next-women'">Next
                                     Product</button>
                             </div>
@@ -83,36 +83,47 @@ export default {
     },
     /* fetching method from API */
     methods: {
-        async callAPI() {
+        async callProductAPI() {
             const response = await fetch(`https://fakestoreapi.com/products/${this.index}`);
-            const result = await response.json();
-            return result;
+            
+            if (!response.ok) {
+                /* handling fetch fail */
+                throw new Error(`API request failed with status ${response.status}`);
+            }
+            
+            const data = await response.json();
+            return data;
         },
-        /* fetch single product, and then update the state */
-        async getSingleProduct() {
+        async getProduct() {
             this.isLoading = true;
-            /* increment for next product until product number 20, and then reset after 20 */
+            
             if (this.index !== 20) {
-                this.index++
+                this.index++;
             } else {
                 this.index = 1;
             }
 
-            let data = await this.callAPI()
-            if (data.category === "men's clothing" || data.category === "women's clothing") {
-                this.product = { data }
-                this.isProductAvailable = true;
-            } else {
-                this.isProductAvailable = false;
-            }
+            try {
+                const data = await this.callProductAPI();
 
-            this.isLoading = false;
+                if (data.category === "men's clothing" || data.category === "women's clothing") {
+                    this.product = { data };
+                    this.isProductAvailable = true;
+                } else {
+                    this.isProductAvailable = false;
+                }
+            } catch (err) {
+                /* handle error fetching */
+                console.error('Error fetching product:', err);
+            } finally {
+                this.isLoading = false;
+            }
         }
     },
     mounted() {
-        this.getSingleProduct();
-    },
-}
+        this.getProduct();
+    }
+};
 </script>
 
 
