@@ -9,14 +9,14 @@
             </div>
         </div>
 
-        <!-- display informasi product -->
+        <!-- display product info -->
         <div v-else class="container"
             :class="!isProductAvailable ? 'bg-none' : product.data.category === 'men\'s clothing' ? 'bg-men' : 'bg-women'">
             <div class="overlay"></div>
             <div class="card">
                 <div v-if="!isProductAvailable" class="product-unavailable-container">
                     <div class="product-details">
-                        <p>This product is unavailable.</p>
+                        <p>This product is not available.</p>
                         <div class="cta">
                             <button type="button" @click="getSingleProduct()" class="cta-next-none">Next Product</button>
                         </div>
@@ -76,7 +76,7 @@ export default {
         }
     },
     computed: {
-        /* compute circle colors based on category */
+        /* compute rating circle color based on category */
         ratingColorClass() {
             return this.product.data.category === "men's clothing" ? 'bg-rating-men' : 'bg-rating-women';
         },
@@ -88,10 +88,10 @@ export default {
             const result = await response.json();
             return result;
         },
-        /* single product fetch method and update component state */
+        /* fetch single product, and then update the state */
         async getSingleProduct() {
             this.isLoading = true;
-            /* increment index for next product and then reset after 20 product */
+            /* increment for next product until product number 20, and then reset after 20 */
             if (this.index !== 20) {
                 this.index++
             } else {
@@ -133,7 +133,7 @@ export default {
     align-items: center;
 }
 
-/* white overlay for bottom part of the page */
+/* white overlay for the background behind the card  */
 .overlay {
     position: absolute;
     z-index: 1;
